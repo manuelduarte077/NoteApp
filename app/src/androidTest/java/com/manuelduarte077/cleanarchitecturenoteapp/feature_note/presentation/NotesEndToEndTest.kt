@@ -114,7 +114,7 @@ class NotesEndToEndTest {
 
     @Test
     fun saveNewNotes_orderByTitleDescending() {
-        for(i in 1..3) {
+        for (i in 1..3) {
             // Click on FAB to get to add note screen
             composeRule.onNodeWithContentDescription("Add").performClick()
 
