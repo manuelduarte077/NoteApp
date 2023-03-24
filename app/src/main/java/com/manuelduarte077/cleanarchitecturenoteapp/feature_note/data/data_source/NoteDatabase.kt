@@ -5,8 +5,7 @@ import androidx.room.RoomDatabase
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
 
 @Database(
-    entities = [Note::class],
-    version = 1
+    entities = [Note::class], version = 1
 )
 abstract class NoteDatabase : RoomDatabase() {
 

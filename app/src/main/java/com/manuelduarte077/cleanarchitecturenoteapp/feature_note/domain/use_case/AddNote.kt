@@ -5,7 +5,7 @@ import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.No
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
 
 class AddNote(
-    private val repository: NoteRepository
+    private val repository: NoteRepository,
 ) {
 
     @Throws(InvalidNoteException::class)
