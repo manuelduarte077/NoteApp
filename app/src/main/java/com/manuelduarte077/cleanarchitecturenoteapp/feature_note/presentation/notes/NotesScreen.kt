@@ -1,5 +1,6 @@
 package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.notes
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,28 +24,28 @@ import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.no
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.util.Screen
 import kotlinx.coroutines.launch
 
-@ExperimentalAnimationApi
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NotesScreen(
     navController: NavController,
-    viewModel: NotesViewModel = hiltViewModel()
+    viewModel: NotesViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
     Scaffold(
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route)
-                },
-                backgroundColor = MaterialTheme.colors.primary
+                }, backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
-        },
-        scaffoldState = scaffoldState
+        }, scaffoldState = scaffoldState
     ) {
         Column(
             modifier = Modifier
@@ -57,8 +58,7 @@ fun NotesScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Your notes",
-                    style = MaterialTheme.typography.h4
+                    text = "Your notes", style = MaterialTheme.typography.h4
                 )
                 IconButton(
                     onClick = {
@@ -66,8 +66,7 @@ fun NotesScreen(
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort"
+                        imageVector = Icons.Default.Sort, contentDescription = "Sort"
                     )
                 }
             }
@@ -76,45 +75,39 @@ fun NotesScreen(
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                OrderSection(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)
-                        .testTag(TestTags.ORDER_SECTION),
+                OrderSection(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+                    .testTag(TestTags.ORDER_SECTION),
                     noteOrder = state.noteOrder,
                     onOrderChange = {
                         viewModel.onEvent(NotesEvent.Order(it))
-                    }
-                )
+                    })
             }
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
+
                 items(state.notes) { note ->
-                    NoteItem(
-                        note = note,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                navController.navigate(
-                                    Screen.AddEditNoteScreen.route +
-                                            "?noteId=${note.id}&noteColor=${note.color}"
-                                )
-                            },
-                        onDeleteClick = {
-                            viewModel.onEvent(NotesEvent.DeleteNote(note))
-                            scope.launch {
-                                val result = scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Note deleted",
-                                    actionLabel = "Undo"
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(NotesEvent.RestoreNote)
-                                }
+                    NoteItem(note = note, modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            navController.navigate(
+                                Screen.AddEditNoteScreen.route + "?noteId=${note.id}&noteColor=${note.color}"
+                            )
+                        }, onDeleteClick = {
+                        viewModel.onEvent(NotesEvent.DeleteNote(note))
+                        scope.launch {
+                            val result = scaffoldState.snackbarHostState.showSnackbar(
+                                message = "Note deleted", actionLabel = "Undo"
+                            )
+                            if (result == SnackbarResult.ActionPerformed) {
+                                viewModel.onEvent(NotesEvent.RestoreNote)
                             }
                         }
-                    )
+                    })
                     Spacer(modifier = Modifier.height(16.dp))
                 }
+
             }
         }
     }

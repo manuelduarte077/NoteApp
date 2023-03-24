@@ -31,11 +31,10 @@ fun NoteItem(
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 10.dp,
     cutCornerSize: Dp = 30.dp,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .testTag(TestTags.NOTE_ITEM)
+        modifier = modifier.testTag(TestTags.NOTE_ITEM)
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val clipPath = Path().apply {
@@ -85,8 +84,7 @@ fun NoteItem(
             )
         }
         IconButton(
-            onClick = onDeleteClick,
-            modifier = Modifier.align(Alignment.BottomEnd)
+            onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd)
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
