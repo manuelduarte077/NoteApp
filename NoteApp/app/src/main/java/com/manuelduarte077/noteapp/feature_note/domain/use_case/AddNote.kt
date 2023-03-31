@@ -1,6 +1,8 @@
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.InvalidNoteException
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
+package com.manuelduarte077.noteapp.feature_note.domain.use_case
+
+import com.manuelduarte077.noteapp.feature_note.domain.model.InvalidNoteException
+import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.domain.repository.NoteRepository
 
 class AddNote(
     private val repository: NoteRepository,
