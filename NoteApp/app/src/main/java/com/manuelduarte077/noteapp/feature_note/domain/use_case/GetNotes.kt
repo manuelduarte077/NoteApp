@@ -1,7 +1,9 @@
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.util.NoteOrder
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.util.OrderType
+package com.manuelduarte077.noteapp.feature_note.domain.use_case
+
+import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.domain.repository.NoteRepository
+import com.manuelduarte077.noteapp.feature_note.domain.util.NoteOrder
+import com.manuelduarte077.noteapp.feature_note.domain.util.OrderType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
