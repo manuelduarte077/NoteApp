@@ -1,14 +1,14 @@
-package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note
+package com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note
 
-import NoteUseCases
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.InvalidNoteException
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.domain.model.InvalidNoteException
+import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.domain.use_case.NoteUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

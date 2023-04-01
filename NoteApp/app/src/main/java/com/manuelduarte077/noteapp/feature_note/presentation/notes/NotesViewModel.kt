@@ -1,13 +1,13 @@
-package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.notes
+package com.manuelduarte077.noteapp.feature_note.presentation.notes
 
-import NoteUseCases
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.util.NoteOrder
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.util.OrderType
+import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.domain.use_case.NoteUseCases
+import com.manuelduarte077.noteapp.feature_note.domain.util.NoteOrder
+import com.manuelduarte077.noteapp.feature_note.domain.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -62,9 +62,9 @@ class NotesViewModel @Inject constructor(
     private fun getNotes(noteOrder: NoteOrder) {
         getNotesJob?.cancel()
         getNotesJob = noteUseCases.getNotes(noteOrder).onEach { notes ->
-                _state.value = state.value.copy(
-                    notes = notes, noteOrder = noteOrder
-                )
-            }.launchIn(viewModelScope)
+            _state.value = state.value.copy(
+                notes = notes, noteOrder = noteOrder
+            )
+        }.launchIn(viewModelScope)
     }
 }

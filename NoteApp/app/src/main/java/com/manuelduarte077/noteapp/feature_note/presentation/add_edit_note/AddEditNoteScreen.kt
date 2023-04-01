@@ -1,4 +1,4 @@
-package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note
+package com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
@@ -8,9 +8,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -21,15 +21,18 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.manuelduarte077.cleanarchitecturenoteapp.core.util.TestTags
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
+
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.manuelduarte077.noteapp.core.utils.TestTags
+import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddEditNoteScreen(
     navController: NavController,
@@ -39,7 +42,7 @@ fun AddEditNoteScreen(
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
 
-    val scaffoldState = rememberScaffoldState()
+    val scaffoldState = remember { SnackbarHostState() }
 
     val noteBackgroundAnimatable = remember {
         Animatable(
@@ -52,7 +55,7 @@ fun AddEditNoteScreen(
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is AddEditNoteViewModel.UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    scaffoldState.showSnackbar(
                         message = event.message
                     )
                 }
@@ -69,12 +72,23 @@ fun AddEditNoteScreen(
                 onClick = {
                     viewModel.onEvent(AddEditNoteEvent.SaveNote)
                 },
-                backgroundColor = MaterialTheme.colors.primary
+                modifier = Modifier
+                    .size(56.dp)
+                    .shadow(15.dp, CircleShape)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary)
             ) {
-                Icon(imageVector = Icons.Default.Save, contentDescription = "Save")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Save")
             }
         },
-        scaffoldState = scaffoldState
+        snackbarHost = {
+            SnackbarHost(
+                hostState = scaffoldState,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            )
+        }
     ) {
         Column(
             modifier = Modifier
@@ -129,7 +143,7 @@ fun AddEditNoteScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h5,
+                textStyle = MaterialTheme.typography.titleLarge,
                 testTag = TestTags.TITLE_TEXT_FIELD
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -143,7 +157,7 @@ fun AddEditNoteScreen(
                     viewModel.onEvent(AddEditNoteEvent.ChangeContentFocus(it))
                 },
                 isHintVisible = contentState.isHintVisible,
-                textStyle = MaterialTheme.typography.body1,
+                textStyle = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.fillMaxHeight(),
                 testTag = TestTags.CONTENT_TEXT_FIELD
             )
