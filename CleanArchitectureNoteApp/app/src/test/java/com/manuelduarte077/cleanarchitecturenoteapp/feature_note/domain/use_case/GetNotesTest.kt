@@ -1,5 +1,6 @@
 package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.use_case
 
+import GetNotes
 import com.google.common.truth.Truth.assertThat
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.data.repository.FakeNoteRepository
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
