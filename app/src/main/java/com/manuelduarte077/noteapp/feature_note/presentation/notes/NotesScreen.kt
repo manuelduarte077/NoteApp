@@ -2,36 +2,34 @@ package com.manuelduarte077.noteapp.feature_note.presentation.notes
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.Icon
 import androidx.compose.material3.*
-import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.manuelduarte077.noteapp.core.utils.TestTags
 import com.manuelduarte077.noteapp.feature_note.presentation.notes.components.NoteItem
 import com.manuelduarte077.noteapp.feature_note.presentation.notes.components.OrderSection
 import com.manuelduarte077.noteapp.feature_note.presentation.util.Screen
+import com.manuelduarte077.noteapp.ui.theme.RedHatFont
 import kotlinx.coroutines.launch
-
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.remember
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,23 +42,44 @@ fun NotesScreen(
     val scope = rememberCoroutineScope()
     val scaffoldState = remember { SnackbarHostState() }
 
-    val colors = MaterialTheme.colorScheme
-
     Scaffold(
+
+        topBar = {
+            SmallTopAppBar(
+                actions = {
+                    IconButton(
+                        onClick = {
+                            viewModel.onEvent(NotesEvent.ToggleOrderSection)
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Sort,
+                            contentDescription = "Sort",
+                        )
+                    }
+                },
+                title = {
+                    Text(
+                        text = "All Notes", style = TextStyle(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = RedHatFont
+                        )
+                    )
+                },
+            )
+        },
 
         floatingActionButton = {
             FloatingActionButton(
-                containerColor = Color(0xff7885FF),
-
-                onClick = {
+                containerColor = Color(0xff7885FF), onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route)
-                },
-                modifier = Modifier
-                    .clip(CircleShape)
+                }, modifier = Modifier.clip(CircleShape)
             ) {
                 Icon(Icons.Rounded.Add, contentDescription = "Add", tint = Color.White)
             }
-        }, snackbarHost = {
+        },
+        snackbarHost = {
             SnackbarHost(hostState = scaffoldState,
                 modifier = Modifier
                     .padding(16.dp)
@@ -72,46 +91,32 @@ fun NotesScreen(
                             .fillMaxWidth(), snackbarData = data
                     )
                 })
-        }) {
+        },
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "All Notes",
-                    style = MaterialTheme.typography.headlineMedium,
-                )
 
-                IconButton(
-                    onClick = {
-                        viewModel.onEvent(NotesEvent.ToggleOrderSection)
-                    },
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Face, contentDescription = "Sort"
-                    )
-                }
-            }
+            Spacer(modifier = Modifier.height(50.dp))
+
             AnimatedVisibility(
                 visible = state.isOrderSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                OrderSection(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp)
-                    .testTag(TestTags.ORDER_SECTION),
+                OrderSection(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag(TestTags.ORDER_SECTION),
                     noteOrder = state.noteOrder,
                     onOrderChange = {
                         viewModel.onEvent(NotesEvent.Order(it))
-                    })
+                    },
+                )
             }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {

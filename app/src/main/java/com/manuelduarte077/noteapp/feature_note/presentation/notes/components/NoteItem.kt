@@ -18,12 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
 import com.manuelduarte077.noteapp.core.utils.TestTags
 import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.ui.theme.RedHatFont
 
 @Composable
 fun NoteItem(
@@ -69,14 +72,24 @@ fun NoteItem(
         ) {
             Text(
                 text = note.title,
-                style = MaterialTheme.typography.titleLarge,
+                style =  TextStyle(
+                    fontFamily = RedHatFont,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                    color = Color(0xFF212121)
+                ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = note.content,
-                style = MaterialTheme.typography.titleMedium,
+                style =  TextStyle(
+                    fontFamily = RedHatFont,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    color = Color(0xFF4F4F4F)
+                ),
                 maxLines = 10,
                 overflow = TextOverflow.Ellipsis
             )
@@ -85,7 +98,7 @@ fun NoteItem(
             onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd)
         ) {
             Icon(
-                imageVector = Icons.Default.Delete,
+                imageVector = Icons.Filled.Delete,
                 contentDescription = "Delete note",
                 tint = MaterialTheme.colorScheme.onError
             )
