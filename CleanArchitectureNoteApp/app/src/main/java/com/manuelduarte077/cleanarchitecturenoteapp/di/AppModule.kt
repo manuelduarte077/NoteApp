@@ -3,14 +3,18 @@ package com.manuelduarte077.cleanarchitecturenoteapp.di
 import AddNote
 import DeleteNote
 import GetNote
-import GetNotes
-import NoteUseCases
+
+import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.use_case.GetNotes
+import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.use_case.NoteUseCases
+
 import android.app.Application
 import androidx.room.Room
+
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.data.data_source.NoteDatabase
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.data.repository.NoteRepositoryImpl
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.repository.NoteRepository
 import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.use_case.*
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

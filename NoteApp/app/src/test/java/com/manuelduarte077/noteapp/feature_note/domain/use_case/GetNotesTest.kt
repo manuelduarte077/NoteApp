@@ -1,16 +1,15 @@
-package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.use_case
+package com.manuelduarte077.noteapp.feature_note.domain.use_case
 
-import com.google.common.truth.Truth.assertThat
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.data.repository.FakeNoteRepository
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.model.Note
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.util.NoteOrder
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.util.OrderType
-
-
+import com.manuelduarte077.noteapp.feature_note.data.repository.FakeNoteRepository
+import com.manuelduarte077.noteapp.feature_note.domain.model.Note
+import com.manuelduarte077.noteapp.feature_note.domain.util.NoteOrder
+import com.manuelduarte077.noteapp.feature_note.domain.util.OrderType
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import com.google.common.truth.Truth.assertThat
+
 
 class GetNotesTest {
 
