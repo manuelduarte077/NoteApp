@@ -2,14 +2,8 @@ package com.manuelduarte077.noteapp.feature_note.presentation.notes.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -33,7 +27,7 @@ fun NoteItem(
     note: Note,
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 10.dp,
-    cutCornerSize: Dp = 30.dp,
+    cutCornerSize: Dp = 50.dp,
     onDeleteClick: () -> Unit,
 ) {
     Box(
@@ -72,7 +66,7 @@ fun NoteItem(
         ) {
             Text(
                 text = note.title,
-                style =  TextStyle(
+                style = TextStyle(
                     fontFamily = RedHatFont,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
@@ -84,24 +78,26 @@ fun NoteItem(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = note.content,
-                style =  TextStyle(
+                style = TextStyle(
                     fontFamily = RedHatFont,
                     fontWeight = FontWeight.Medium,
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
                     color = Color(0xFF4F4F4F)
                 ),
-                maxLines = 10,
+                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
         }
-        IconButton(
-            onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Delete,
-                contentDescription = "Delete note",
-                tint = MaterialTheme.colorScheme.onError
-            )
-        }
+
+
+//        IconButton(
+//            onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd)
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.Delete,
+//                contentDescription = "Delete note",
+//                tint = MaterialTheme.colorScheme.onError
+//            )
+//        }
     }
 }
