@@ -7,10 +7,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.Icon
 import androidx.compose.material3.*
+import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -27,6 +30,8 @@ import kotlinx.coroutines.launch
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +42,7 @@ fun NotesScreen(
 ) {
     val state = viewModel.state.value
     val scope = rememberCoroutineScope()
-    val scaffoldState = remember { SnackbarHostState()}
+    val scaffoldState = remember { SnackbarHostState() }
 
     val colors = MaterialTheme.colorScheme
 
@@ -45,17 +50,18 @@ fun NotesScreen(
 
         floatingActionButton = {
             FloatingActionButton(
+                containerColor = Color(0xff7885FF),
+
                 onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route)
-                }, Modifier.background(
-                    color = colors.primary
-                )
+                },
+                modifier = Modifier
+                    .clip(CircleShape)
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                Icon(Icons.Rounded.Add, contentDescription = "Add", tint = Color.White)
             }
-        } , snackbarHost = {
-            SnackbarHost(
-                hostState = scaffoldState,
+        }, snackbarHost = {
+            SnackbarHost(hostState = scaffoldState,
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth(),
@@ -63,13 +69,10 @@ fun NotesScreen(
                     Snackbar(
                         modifier = Modifier
                             .padding(16.dp)
-                            .fillMaxWidth(),
-                        snackbarData = data
+                            .fillMaxWidth(), snackbarData = data
                     )
-                }
-            )
-        }
-    ) {
+                })
+        }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -81,15 +84,17 @@ fun NotesScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Your notes", style = MaterialTheme.typography.displayMedium
+                    text = "All Notes",
+                    style = MaterialTheme.typography.headlineMedium,
                 )
+
                 IconButton(
                     onClick = {
                         viewModel.onEvent(NotesEvent.ToggleOrderSection)
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowDropDown, contentDescription = "Sort"
+                        imageVector = Icons.Default.Face, contentDescription = "Sort"
                     )
                 }
             }
@@ -108,6 +113,7 @@ fun NotesScreen(
                     })
             }
             Spacer(modifier = Modifier.height(16.dp))
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
 
                 items(state.notes) { note ->
