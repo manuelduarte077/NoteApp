@@ -9,8 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
+import androidx.compose.material3.TopAppBarDefaults
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -21,9 +24,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.manuelduarte077.noteapp.core.utils.TestTags
 import com.manuelduarte077.noteapp.feature_note.domain.model.Note
 import com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
@@ -31,13 +33,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
+@ExperimentalMaterial3Api
 @Composable
 fun AddEditNoteScreen(
-    navController: NavController,
-    noteColor: Int,
-    viewModel: AddEditNoteViewModel = hiltViewModel()
+    navController: NavController, noteColor: Int, viewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
@@ -67,26 +68,51 @@ fun AddEditNoteScreen(
     }
 
     Scaffold(
+
+
         floatingActionButton = {
-            FloatingActionButton(
+
+
+            ExtendedFloatingActionButton(
+                containerColor = Color(0xff7885FF),
+                expanded = true,
+                text = { Text("Save", color = Color(0xffFFFFFF)) },
+                icon = {
+                    Icon(
+                        Icons.Filled.CheckCircle, "Save Note", tint = Color(0xffFFFFFF)
+                    )
+                },
                 onClick = {
                     viewModel.onEvent(AddEditNoteEvent.SaveNote)
                 },
+
                 modifier = Modifier
-                    .size(56.dp)
-                    .shadow(15.dp, CircleShape)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary)
-            ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Save")
-            }
+                    .shadow(15.dp, CircleShape)
+            )
+
         },
         snackbarHost = {
             SnackbarHost(
-                hostState = scaffoldState,
-                modifier = Modifier
+                hostState = scaffoldState, modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
+            )
+        },
+        topBar = {
+
+            SmallTopAppBar(
+                title = {
+                    Text(text = "Add Note")
+                },
+
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            Icons.Filled.ArrowBack, "Save Note"
+                        )
+                    }
+                },
             )
         }
     ) {
@@ -96,17 +122,19 @@ fun AddEditNoteScreen(
                 .background(noteBackgroundAnimatable.value)
                 .padding(16.dp)
         ) {
+            Spacer(modifier = Modifier.height(150.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
+
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Note.noteColors.forEach { color ->
                     val colorInt = color.toArgb()
                     Box(
                         modifier = Modifier
-                            .size(50.dp)
+                            .size(40.dp)
                             .shadow(15.dp, CircleShape)
                             .clip(CircleShape)
                             .background(color)
@@ -131,7 +159,9 @@ fun AddEditNoteScreen(
                     )
                 }
             }
+
             Spacer(modifier = Modifier.height(16.dp))
+
             TransparentHintTextField(
                 text = titleState.text,
                 hint = titleState.hint,
@@ -146,7 +176,9 @@ fun AddEditNoteScreen(
                 textStyle = MaterialTheme.typography.titleLarge,
                 testTag = TestTags.TITLE_TEXT_FIELD
             )
+
             Spacer(modifier = Modifier.height(16.dp))
+
             TransparentHintTextField(
                 text = contentState.text,
                 hint = contentState.hint,
@@ -164,3 +196,4 @@ fun AddEditNoteScreen(
         }
     }
 }
+
