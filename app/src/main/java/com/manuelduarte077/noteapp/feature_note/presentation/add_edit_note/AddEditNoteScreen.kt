@@ -7,30 +7,30 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
-import androidx.compose.material3.TopAppBarDefaults
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.manuelduarte077.noteapp.core.utils.TestTags
 import com.manuelduarte077.noteapp.feature_note.domain.model.Note
 import com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
+import com.manuelduarte077.noteapp.ui.theme.RedHatFont
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -70,9 +70,7 @@ fun AddEditNoteScreen(
 
     Scaffold(
 
-
         floatingActionButton = {
-
 
             ExtendedFloatingActionButton(
                 containerColor = Color(0xff7885FF),
@@ -101,12 +99,18 @@ fun AddEditNoteScreen(
             )
         },
         topBar = {
-
             SmallTopAppBar(
                 title = {
-                    Text(text = "Add Note")
-                },
 
+                    Text(
+                        text = "Add Note",
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = RedHatFont
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
@@ -174,7 +178,13 @@ fun AddEditNoteScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.titleLarge,
+                textStyle = TextStyle(
+                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = RedHatFont,
+                    color = Color(0xff303030)
+                ),
+
                 testTag = TestTags.TITLE_TEXT_FIELD
             )
 
@@ -190,7 +200,12 @@ fun AddEditNoteScreen(
                     viewModel.onEvent(AddEditNoteEvent.ChangeContentFocus(it))
                 },
                 isHintVisible = contentState.isHintVisible,
-                textStyle = MaterialTheme.typography.titleLarge,
+                textStyle = TextStyle(
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = RedHatFont,
+                    color = Color(0xff4F4F4F)
+                ),
                 modifier = Modifier.fillMaxHeight(),
                 testTag = TestTags.CONTENT_TEXT_FIELD
             )
