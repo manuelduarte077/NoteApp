@@ -1,4 +1,4 @@
-package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation
+package com.manuelduarte077.noteapp.feature_note.presentation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.test.*
@@ -8,17 +8,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.manuelduarte077.cleanarchitecturenoteapp.core.util.TestTags
-import com.manuelduarte077.cleanarchitecturenoteapp.di.AppModule
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note.AddEditNoteScreen
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.notes.NotesScreen
-import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.util.Screen
-import com.manuelduarte077.cleanarchitecturenoteapp.ui.theme.CleanArchitectureNoteAppTheme
-
+import com.manuelduarte077.noteapp.core.utils.TestTags
+import com.manuelduarte077.noteapp.di.AppModule
+import com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note.AddEditNoteScreen
+import com.manuelduarte077.noteapp.feature_note.presentation.notes.NotesScreen
+import com.manuelduarte077.noteapp.feature_note.presentation.util.Screen
+import com.manuelduarte077.noteapp.ui.theme.NoteAppTheme
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +36,7 @@ class NotesEndToEndTest {
     fun setUp() {
         hiltRule.inject()
         composeRule.setContent {
-            CleanArchitectureNoteAppTheme {
+            NoteAppTheme {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,

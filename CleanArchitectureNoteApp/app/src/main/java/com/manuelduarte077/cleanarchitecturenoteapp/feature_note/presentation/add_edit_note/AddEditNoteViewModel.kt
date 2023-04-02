@@ -1,6 +1,6 @@
 package com.manuelduarte077.cleanarchitecturenoteapp.feature_note.presentation.add_edit_note
 
-import NoteUseCases
+import com.manuelduarte077.cleanarchitecturenoteapp.feature_note.domain.use_case.NoteUseCases
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb

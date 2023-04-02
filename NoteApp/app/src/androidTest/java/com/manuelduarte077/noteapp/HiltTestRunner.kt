@@ -1,4 +1,4 @@
-package com.manuelduarte077.cleanarchitecturenoteapp
+package com.manuelduarte077.noteapp
 
 import android.app.Application
 import android.content.Context
