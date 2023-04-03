@@ -79,20 +79,17 @@ fun NotesScreen(
                 Icon(Icons.Rounded.Add, contentDescription = "Add", tint = Color.White)
             }
         },
+
         snackbarHost = {
-            SnackbarHost(hostState = scaffoldState,
+            SnackbarHost(
+                hostState = scaffoldState,
                 modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxWidth(),
-                snackbar = { data ->
-                    Snackbar(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(), snackbarData = data
-                    )
-                })
-        },
-    ) {
+                    .fillMaxWidth()
+            )
+        }
+
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

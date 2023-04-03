@@ -1,5 +1,6 @@
 package com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note
 
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
@@ -9,8 +10,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.outlined.IosShare
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,12 +36,13 @@ import com.manuelduarte077.noteapp.ui.theme.RedHatFont
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditNoteScreen(
-    navController: NavController, noteColor: Int, viewModel: AddEditNoteViewModel = hiltViewModel()
+    navController: NavController,
+    noteColor: Int,
+    viewModel: AddEditNoteViewModel = hiltViewModel(),
 ) {
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
@@ -100,8 +103,14 @@ fun AddEditNoteScreen(
         },
         topBar = {
             SmallTopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            Icons.Rounded.ArrowBack, "Save Note"
+                        )
+                    }
+                },
                 title = {
-
                     Text(
                         text = "Add Note",
                         style = TextStyle(
@@ -111,13 +120,18 @@ fun AddEditNoteScreen(
                         )
                     )
                 },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            Icons.Filled.ArrowBack, "Save Note"
-                        )
+                actions = {
+                    Row {
+                        IconButton(
+                            onClick = {
+                            }) {
+                            Icon(
+                                Icons.Outlined.IosShare, "Save Note"
+                            )
+                        }
                     }
-                },
+                }
+
             )
         }
     ) {
@@ -212,4 +226,5 @@ fun AddEditNoteScreen(
         }
     }
 }
+
 
