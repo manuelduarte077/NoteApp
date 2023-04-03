@@ -2,8 +2,11 @@ package com.manuelduarte077.noteapp.feature_note.presentation.notes.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -90,14 +93,14 @@ fun NoteItem(
         }
 
 
-//        IconButton(
-//            onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd)
-//        ) {
-//            Icon(
-//                imageVector = Icons.Filled.Delete,
-//                contentDescription = "Delete note",
-//                tint = MaterialTheme.colorScheme.onError
-//            )
-//        }
+        IconButton(
+            onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Delete,
+                contentDescription = "Delete note",
+                tint = Color(0xFF4F4F4F)
+            )
+        }
     }
 }
