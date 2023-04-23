@@ -89,7 +89,7 @@ fun NotesScreen(
             )
         }
 
-        ) {
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

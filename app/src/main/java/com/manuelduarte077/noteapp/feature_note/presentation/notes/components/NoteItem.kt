@@ -30,7 +30,7 @@ fun NoteItem(
     note: Note,
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 10.dp,
-    cutCornerSize: Dp = 50.dp,
+    cutCornerSize: Dp = 40.dp,
     onDeleteClick: () -> Unit,
 ) {
     Box(
