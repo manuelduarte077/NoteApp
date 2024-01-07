@@ -2,7 +2,6 @@ package com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note
 
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -24,12 +23,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.manuelduarte077.noteapp.R
 import com.manuelduarte077.noteapp.core.utils.TestTags
 import com.manuelduarte077.noteapp.feature_note.domain.model.Note
 import com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
@@ -77,17 +78,16 @@ fun AddEditNoteScreen(
     Scaffold(
 
         floatingActionButton = {
-
             ExtendedFloatingActionButton(
                 containerColor = Color(0xff7885FF),
                 expanded = true,
-                text = { Text("Save", color = Color(0xffFFFFFF)) },
+                text = { Text(stringResource(R.string.save_text), color = Color(0xffFFFFFF)) },
                 icon = {
                     Icon(
                         Icons.Filled.CheckCircle, "Save Note", tint = Color(0xffFFFFFF)
                     )
 
-                       },
+                },
 
                 onClick = {
                     viewModel.onEvent(AddEditNoteEvent.SaveNote)
@@ -98,48 +98,39 @@ fun AddEditNoteScreen(
                     .shadow(15.dp, CircleShape)
             )
 
-        },
-        snackbarHost = {
+        }, snackbarHost = {
             SnackbarHost(
                 hostState = scaffoldState, modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
             )
-        },
-        topBar = {
-            SmallTopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            Icons.Rounded.ArrowBack, "Save Note"
-                        )
-                    }
-                },
-                title = {
-                    Text(
-                        text = "Add Note",
-                        style = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            fontFamily = RedHatFont
-                        )
+        }, topBar = {
+            SmallTopAppBar(navigationIcon = {
+                IconButton(onClick = { navController.navigateUp() }) {
+                    Icon(
+                        Icons.Rounded.ArrowBack, "Save Note"
                     )
-                },
-                actions = {
-                    Row {
-                        IconButton(
-                            onClick = {}
-                        ) {
-                            Icon(
-                                Icons.Outlined.IosShare, "Save Note"
-                            )
-                        }
+                }
+            }, title = {
+                Text(
+                    text = stringResource(R.string.add_note_text), style = TextStyle(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = RedHatFont
+                    )
+                )
+            }, actions = {
+                Row {
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Outlined.IosShare, "Save Note"
+                        )
                     }
                 }
+            }
 
             )
-        }
-    ) {
+        }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -156,31 +147,26 @@ fun AddEditNoteScreen(
             ) {
                 Note.noteColors.forEach { color ->
                     val colorInt = color.toArgb()
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .shadow(5.dp, CircleShape)
-                            .clip(CircleShape)
-                            .background(color)
-                            .border(
-                                width = 3.dp,
-                                color = if (viewModel.noteColor.value == colorInt) {
-                                    Color.Black
-                                } else Color.Transparent,
-                                shape = CircleShape
-                            )
-                            .clickable {
-                                scope.launch {
-                                    noteBackgroundAnimatable.animateTo(
-                                        targetValue = Color(colorInt),
-                                        animationSpec = tween(
-                                            durationMillis = 500
-                                        )
+                    Box(modifier = Modifier
+                        .size(48.dp)
+                        .shadow(5.dp, CircleShape)
+                        .clip(CircleShape)
+                        .background(color)
+                        .border(
+                            width = 3.dp, color = if (viewModel.noteColor.value == colorInt) {
+                                Color.Black
+                            } else Color.Transparent, shape = CircleShape
+                        )
+                        .clickable {
+                            scope.launch {
+                                noteBackgroundAnimatable.animateTo(
+                                    targetValue = Color(colorInt), animationSpec = tween(
+                                        durationMillis = 500
                                     )
-                                }
-                                viewModel.onEvent(AddEditNoteEvent.ChangeColor(colorInt))
+                                )
                             }
-                    )
+                            viewModel.onEvent(AddEditNoteEvent.ChangeColor(colorInt))
+                        })
                 }
             }
 
@@ -232,15 +218,6 @@ fun AddEditNoteScreen(
         }
 
     }
-}
-
-fun createShareIntent(noteTitle: String, noteContent: String): Intent {
-    val shareIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "$noteTitle\n$noteContent")
-        type = "text/plain"
-    }
-    return Intent.createChooser(shareIntent, null)
 }
 
 
