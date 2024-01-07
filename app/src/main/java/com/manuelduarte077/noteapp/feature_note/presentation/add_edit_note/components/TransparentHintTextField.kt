@@ -42,7 +42,8 @@ fun TransparentHintTextField(
         )
         if (isHintVisible) {
             Text(
-                text = hint, style = textStyle,
+                text = hint,
+                style = textStyle,
                 color = Color.DarkGray,
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
             )

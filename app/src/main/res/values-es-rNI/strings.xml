@@ -8,4 +8,8 @@
     <string name="color">Color</string>
     <string name="date">Fecha</string>
     <string name="title">Titulo</string>
+    <string name="enter_title">Ingresa el titulo</string>
+    <string name="enter_some_content">Introduce algún contenido</string>
+
+
 </resources>
