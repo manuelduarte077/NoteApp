@@ -2,6 +2,7 @@ package com.manuelduarte077.noteapp.feature_note.presentation.add_edit_note
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -36,6 +37,7 @@ import com.manuelduarte077.noteapp.ui.theme.RedHatFont
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,6 +66,7 @@ fun AddEditNoteScreen(
                         message = event.message
                     )
                 }
+
                 is AddEditNoteViewModel.UiEvent.SaveNote -> {
                     navController.navigateUp()
                 }
@@ -83,7 +86,9 @@ fun AddEditNoteScreen(
                     Icon(
                         Icons.Filled.CheckCircle, "Save Note", tint = Color(0xffFFFFFF)
                     )
-                },
+
+                       },
+
                 onClick = {
                     viewModel.onEvent(AddEditNoteEvent.SaveNote)
                 },
@@ -123,8 +128,8 @@ fun AddEditNoteScreen(
                 actions = {
                     Row {
                         IconButton(
-                            onClick = {
-                            }) {
+                            onClick = {}
+                        ) {
                             Icon(
                                 Icons.Outlined.IosShare, "Save Note"
                             )
@@ -153,7 +158,7 @@ fun AddEditNoteScreen(
                     val colorInt = color.toArgb()
                     Box(
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(48.dp)
                             .shadow(5.dp, CircleShape)
                             .clip(CircleShape)
                             .background(color)
@@ -179,7 +184,7 @@ fun AddEditNoteScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             TransparentHintTextField(
                 text = titleState.text,
@@ -202,7 +207,8 @@ fun AddEditNoteScreen(
                 testTag = TestTags.TITLE_TEXT_FIELD
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(40.dp))
+
 
             TransparentHintTextField(
                 text = contentState.text,
@@ -224,7 +230,17 @@ fun AddEditNoteScreen(
                 testTag = TestTags.CONTENT_TEXT_FIELD
             )
         }
+
     }
+}
+
+fun createShareIntent(noteTitle: String, noteContent: String): Intent {
+    val shareIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, "$noteTitle\n$noteContent")
+        type = "text/plain"
+    }
+    return Intent.createChooser(shareIntent, null)
 }
 
 
