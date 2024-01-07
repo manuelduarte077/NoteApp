@@ -71,26 +71,31 @@ class AddEditNoteViewModel @Inject constructor(
                     text = event.value
                 )
             }
+
             is AddEditNoteEvent.ChangeTitleFocus -> {
                 _noteTitle.value = noteTitle.value.copy(
                     isHintVisible = !event.focusState.isFocused &&
                             noteTitle.value.text.isBlank()
                 )
             }
+
             is AddEditNoteEvent.EnteredContent -> {
                 _noteContent.value = _noteContent.value.copy(
                     text = event.value
                 )
             }
+
             is AddEditNoteEvent.ChangeContentFocus -> {
                 _noteContent.value = _noteContent.value.copy(
                     isHintVisible = !event.focusState.isFocused &&
                             _noteContent.value.text.isBlank()
                 )
             }
+
             is AddEditNoteEvent.ChangeColor -> {
                 _noteColor.value = event.color
             }
+
             is AddEditNoteEvent.SaveNote -> {
                 viewModelScope.launch {
                     try {

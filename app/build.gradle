@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.manuelduarte077.noteapp'
+    namespace 'com.manuelduarte077.notyapp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.manuelduarte077.noteapp"
+        applicationId "com.manuelduarte077.notyapp"
         minSdk 24
         targetSdk 33
         versionCode 1
