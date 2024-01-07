@@ -18,12 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.manuelduarte077.noteapp.R
 import com.manuelduarte077.noteapp.core.utils.TestTags
 import com.manuelduarte077.noteapp.feature_note.presentation.notes.components.NoteItem
 import com.manuelduarte077.noteapp.feature_note.presentation.notes.components.OrderSection
@@ -60,7 +62,7 @@ fun NotesScreen(
                 },
                 title = {
                     Text(
-                        text = "All Notes", style = TextStyle(
+                        text = stringResource(R.string.app_name), style = TextStyle(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = RedHatFont
